@@ -1,5 +1,12 @@
 from django.shortcuts import render
 
+from django.http import HttpResponse
+from django.shortcuts import render, reverse
+from django.utils import formats
+import datetime
+import os
+from django.http import JsonResponse
+
 DATA = {
     'omlet': {
         'яйца, шт': 2,
@@ -18,6 +25,35 @@ DATA = {
     },
     # можете добавить свои рецепты ;)
 }
+
+def home_dishes(request):
+
+    template_name = 'app/calculator.html'
+
+    pages = {
+        'Главная страница': reverse('home'),
+        'Омлет': reverse('omlet'),
+        'Паста': reverse('pasta'),
+        'Бутерброд': reverse('buter')
+    }
+
+    context = {
+        'pages': pages
+    }
+    return render(request, template_name, context)
+
+def omlet_view(request):
+    omlet_ingredients = DATA['omlet']
+    return HttpResponse(f'Ингридиенты для омлета: {omlet_ingredients}')
+
+def pasta_view(request):
+    pasta_ingredients = DATA['pasta']
+    return HttpResponse(f'Ингридиенты для омлета: {pasta_ingredients}')
+
+def buter_view(request):
+    buter_ingredients = DATA['buter']
+    return HttpResponse(f'Ингридиенты для омлета: {buter_ingredients}')
+
 
 # Напишите ваш обработчик. Используйте DATA как источник данных
 # Результат - render(request, 'calculator/index.html', context)
