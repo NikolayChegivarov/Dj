@@ -23,15 +23,14 @@ DATA = {
         'сыр, ломтик': 1,
         'помидор, ломтик': 1,
     },
-    # можете добавить свои рецепты ;)
 }
 
 def home_dishes(request):
 
-    template_name = 'app/calculator.html'
+    template_name = 'calculator/index.html'
 
     pages = {
-        'Главная страница': reverse('home'),
+        'Рецепты': reverse('home'),
         'Омлет': reverse('omlet'),
         'Паста': reverse('pasta'),
         'Бутерброд': reverse('buter')
@@ -46,6 +45,14 @@ def omlet_view(request):
     omlet_ingredients = DATA['omlet']
     return HttpResponse(f'Ингридиенты для омлета: {omlet_ingredients}')
 
+    # context = {
+    #   'recipe': {
+    #     'ингредиент1': количество1,
+    #     'ингредиент2': количество2,
+    #   }
+    # }
+    # return render(request, template_name, context)
+
 def pasta_view(request):
     pasta_ingredients = DATA['pasta']
     return HttpResponse(f'Ингридиенты для омлета: {pasta_ingredients}')
@@ -53,7 +60,6 @@ def pasta_view(request):
 def buter_view(request):
     buter_ingredients = DATA['buter']
     return HttpResponse(f'Ингридиенты для омлета: {buter_ingredients}')
-
 
 # Напишите ваш обработчик. Используйте DATA как источник данных
 # Результат - render(request, 'calculator/index.html', context)
