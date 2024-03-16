@@ -1,11 +1,4 @@
-from django.shortcuts import render
-
-from django.http import HttpResponse
 from django.shortcuts import render, reverse
-from django.utils import formats
-import datetime
-import os
-from django.http import JsonResponse
 
 DATA = {
     'omlet': {
@@ -25,11 +18,11 @@ DATA = {
     },
 }
 
-def home_dishes(request):
+def home_view(request):
 
     template_name = 'calculator/index.html'
 
-    pages = {
+    recipe = {
         'Рецепты': reverse('home'),
         'Омлет': reverse('omlet'),
         'Паста': reverse('pasta'),
@@ -37,36 +30,32 @@ def home_dishes(request):
     }
 
     context = {
-        'pages': pages
+        'recipe': recipe
     }
     return render(request, template_name, context)
 
-def omlet_view(request):
-    omlet_ingredients = DATA['omlet']
-    return HttpResponse(f'Ингридиенты для омлета: {omlet_ingredients}')
 
-    # context = {
-    #   'recipe': {
-    #     'ингредиент1': количество1,
-    #     'ингредиент2': количество2,
-    #   }
-    # }
-    # return render(request, template_name, context)
+def get_ingredients(dish, servings=1):
+    ingredients = DATA.get(dish, {})
+    return {ingredient: quantity * servings for ingredient, quantity in ingredients.items()}
+
+def omlet_view(request):
+    servings = request.GET.get('servings', 1)
+    servings = int(servings)
+    ingredients = get_ingredients('omlet', servings)
+    context = {'recipe': ingredients}
+    return render(request, 'calculator/index.html', context)
 
 def pasta_view(request):
-    pasta_ingredients = DATA['pasta']
-    return HttpResponse(f'Ингридиенты для омлета: {pasta_ingredients}')
+    servings = request.GET.get('servings', 1)
+    servings = int(servings)
+    ingredients = get_ingredients('pasta', servings)
+    context = {'recipe': ingredients}
+    return render(request, 'calculator/index.html', context)
 
 def buter_view(request):
-    buter_ingredients = DATA['buter']
-    return HttpResponse(f'Ингридиенты для омлета: {buter_ingredients}')
-
-# Напишите ваш обработчик. Используйте DATA как источник данных
-# Результат - render(request, 'calculator/index.html', context)
-# В качестве контекста должен быть передан словарь с рецептом:
-# context = {
-#   'recipe': {
-#     'ингредиент1': количество1,
-#     'ингредиент2': количество2,
-#   }
-# }
+    servings = request.GET.get('servings', 1)
+    servings = int(servings)
+    ingredients = get_ingredients('buter', servings)
+    context = {'recipe': ingredients}
+    return render(request, 'calculator/index.html', context)

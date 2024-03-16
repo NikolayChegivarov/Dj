@@ -20,8 +20,7 @@ from app.views import time_view, workdir_view, home_view, index_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
-    # Раскомментируйте код, чтобы данные урлы
-    # обрабатывались Djang
+
     path('index_view', index_view, name='index'),
     path('current_time/', time_view, name='time'),
     path('workdir_view/', workdir_view, name='workdir'),

@@ -10,7 +10,7 @@ def home_view(request):
     template_name = 'app/home.html'
 
     pages = {
-        'Главная страница': reverse('home'),
+        'Домашняя страница': reverse('home'),
         'Показать текущее время': reverse('time'),
         'Показать содержимое рабочей директории': reverse('workdir'),
         'Текст': reverse('index')
@@ -19,6 +19,7 @@ def home_view(request):
     context = {
         'pages': pages
     }
+
     return render(request, template_name, context)
 
 
