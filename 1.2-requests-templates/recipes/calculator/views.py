@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render, Http404
 
 DATA = {
     'omlet': {
@@ -7,8 +7,8 @@ DATA = {
         'соль, ч.л.': 0.5,
     },
     'pasta': {
-        'макароны, г': 0.3,
-        'сыр, г': 0.05,
+        'макароны, кг': 0.3,
+        'сыр, кг': 0.05,
     },
     'buter': {
         'хлеб, ломтик': 1,
@@ -18,44 +18,16 @@ DATA = {
     },
 }
 
-def home_view(request):
+def get_recipe(request, dish_name):
+    if dish_name not in DATA:
+        raise Http404("Рецепт не найден!")
 
-    template_name = 'calculator/index.html'
-
-    recipe = {
-        'Рецепты': reverse('home'),
-        'Омлет': reverse('omlet'),
-        'Паста': reverse('pasta'),
-        'Бутерброд': reverse('buter')
-    }
+    servings_number = int(request.GET.get('servings', 1))
+    ingredients = DATA[dish_name].copy()  # Используем копию, чтобы не изменять исходный словарь
+    for ingredient, value in ingredients.items():
+        ingredients[ingredient] = servings_number * value
 
     context = {
-        'recipe': recipe
+        'recipe': ingredients
     }
-    return render(request, template_name, context)
-
-
-def get_ingredients(dish, servings=1):
-    ingredients = DATA.get(dish, {})
-    return {ingredient: quantity * servings for ingredient, quantity in ingredients.items()}
-
-def omlet_view(request):
-    servings = request.GET.get('servings', 1)
-    servings = int(servings)
-    ingredients = get_ingredients('omlet', servings)
-    context = {'recipe': ingredients}
-    return render(request, 'calculator/index.html', context)
-
-def pasta_view(request):
-    servings = request.GET.get('servings', 1)
-    servings = int(servings)
-    ingredients = get_ingredients('pasta', servings)
-    context = {'recipe': ingredients}
-    return render(request, 'calculator/index.html', context)
-
-def buter_view(request):
-    servings = request.GET.get('servings', 1)
-    servings = int(servings)
-    ingredients = get_ingredients('buter', servings)
-    context = {'recipe': ingredients}
     return render(request, 'calculator/index.html', context)

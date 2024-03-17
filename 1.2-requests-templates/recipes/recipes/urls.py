@@ -14,15 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns: path('blog/', include('blog.urls'))
 """
 
-from django.contrib import admin
+
+from calculator.views import get_recipe
 from django.urls import path
-from calculator.views import home_view, omlet_view, pasta_view, buter_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', home_view, name='home'), 
-    path('omlet/', omlet_view, name='omlet'),
-    path('pasta/', pasta_view, name='pasta'),
-    path('buter/', buter_view, name='buter'),
+    path('<str:dish_name>/', get_recipe, name='recipe'),
 ]
 
