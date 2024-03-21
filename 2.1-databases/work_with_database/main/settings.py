@@ -23,6 +23,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+from config import password
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,7 +57,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': '1171Nixon5547',
+        'PASSWORD': password,
         'OPTIONS': {
             'client_encoding': 'UTF8',
         },

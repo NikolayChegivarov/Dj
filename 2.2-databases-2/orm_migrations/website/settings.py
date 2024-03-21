@@ -26,6 +26,7 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
+from config import password
 
 # Application definition
 
@@ -77,7 +78,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': '1171Nixon5547',
+        'PASSWORD': password,
     }
 }
 
@@ -133,3 +134,4 @@ try:
 except ImportError:
     pass
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
