@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-{% load static %} <!-- Загружает библиотеку тегов статического шаблона, позволяя использовать тег {% static %} для ссылки на статические файлы -->
+{% load static %} <!-- Загружает библиотеку тегов статического шаблона, позволяя использовать тег {# static #} для ссылки на статические файлы -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/3-col-portfolio.css' %}" rel="stylesheet">
 <html>
  <head>
     <meta charset="UTF-8"> <!-- Указывает кодировку символов для HTML-документа -->
@@ -32,3 +34,4 @@
     <script src="{% static "js/jquery.min.js" %}"></script> <!-- Ссылки на jQuery из статического каталога -->
  </body>
 </html>
+

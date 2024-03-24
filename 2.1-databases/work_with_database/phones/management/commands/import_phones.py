@@ -4,11 +4,15 @@ from phones.models import Phone
 from slugify import slugify
 
 class Command(BaseCommand):
-    print('заливаем мобилки.')
+
     def add_arguments(self, parser):
+        """Добавляет аргумент csvfile, который позволяет
+        указать путь к CSV файлу при вызове команды"""
         parser.add_argument('csvfile', type=str, help='D:\IT\Проекты\dj-homeworks\2.1-databases\work_with_database\phones.csv')
 
     def handle(self, *args, **options):
+        """Импортирует содержимое csv в базу данных,
+        создает объекты модели Phone для каждой строки в файле. """
         csv_file_path = options['csvfile']
         with open(csv_file_path, 'r') as file:
             phones = list(csv.DictReader(file, delimiter=';'))
